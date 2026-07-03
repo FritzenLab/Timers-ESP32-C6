@@ -1,3 +1,6 @@
+// Implementation of two LEDs blinking from two separate hardware timers. These are
+// general purpose timers "GPTimer0" and "GPTimer1". There is also a push button
+// that triggers the watchdog timer. That resets the microcontroller.
 #include <driver/gpio.h>
 #include <driver/gptimer.h>
 #include <esp_task_wdt.h>
