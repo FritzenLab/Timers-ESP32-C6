@@ -8,7 +8,8 @@
 #define BUTTON_GPIO GPIO_NUM_18 // D10 of Xiao ESP32-C6
 gptimer_handle_t led1 = NULL;
 gptimer_handle_t led2 = NULL;
-volatile bool buttonPressed = false;
+volatile bool buttonPressed1 = false;
+volatile bool buttonPressed2 = false;
 
 void setupGPIO()
 {
@@ -84,7 +85,7 @@ bool IRAM_ATTR led1_callback(
     void *user_ctx)
 {
     static bool state = false;
-    if(buttonPressed == false){
+    if(buttonPressed1 == false){
         state = !state;
         gpio_set_level(LED_GPIO1, state);        
     }else{
@@ -100,7 +101,7 @@ bool IRAM_ATTR led2_callback(
     void *user_ctx)
 {
     static bool state = false;
-    if(buttonPressed == false){
+    if(buttonPressed2 == false){
         state = !state;
         gpio_set_level(LED_GPIO2, state);        
     }else{
@@ -139,12 +140,13 @@ void loop() {
     // when push button on pin 18 (D10 of Xiao ESP32-C6) is pressed
     if (gpio_get_level(BUTTON_GPIO) == 0)
     {
-        buttonPressed= true; // this makes the LED stop blinking and stay solid
+        buttonPressed1= true; // this makes the LED stop blinking and stay solid
+        buttonPressed2= true; // this makes the LED stop blinking and stay solid
     }
     // buttonPressed goes to true when the push button is pressed, effectively
     // preventing the watchdog from being reset periodically. After some time 
     // the watchdog is triggered, resetting the microcontroller    
-    if(buttonPressed == false){ 
+    if(buttonPressed1 == false && buttonPressed2 == false){ 
         esp_task_wdt_reset(); // Reset watchdog timer
     }
 }
