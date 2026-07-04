@@ -56,7 +56,7 @@ void setupGPIO()
     ESP_ERROR_CHECK(gpio_install_isr_service(0));
     ESP_ERROR_CHECK(gpio_isr_handler_add(BUTTON_GPIO, gpio_isr_handler, NULL));
 }
-// Interrupt Service Routine
+// Interrupt Service Routine for the push button
 static void IRAM_ATTR gpio_isr_handler(void *arg)
 {
     buttonInterrupt = true;
